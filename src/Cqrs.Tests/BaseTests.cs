@@ -1,7 +1,7 @@
-﻿namespace Cqrs.Tests
-{
-    using Cqrs.Configuration;
+﻿using Cqrs.Configuration;
 
+namespace Cqrs.Tests
+{
     public class BaseTests
     {
         protected IQueryDispatcher QueryDispatcher => CqrsConfiguration.Container.GetInstance<IQueryDispatcher>();

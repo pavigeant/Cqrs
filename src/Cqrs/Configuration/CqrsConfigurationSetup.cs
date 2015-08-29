@@ -1,31 +1,30 @@
-﻿namespace Cqrs.Configuration
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
+namespace Cqrs.Configuration
+{
     public class CqrsConfigurationSetup
     {
-        internal IContainer _container { get; private set; }
+        internal IContainer Container { get; private set; }
 
-        internal bool _useDefaultDispatchers { get; private set; }
+        internal bool IsUsingDefaultDispatchers { get; private set; }
 
-        internal List<Assembly> _assemblies = new List<Assembly>();
+        internal List<Assembly> Assemblies = new List<Assembly>();
 
-        public CqrsConfigurationSetup Container(IContainer container)
+        public CqrsConfigurationSetup WithContainer(IContainer container)
         {
-            _container = container;
+            Container = container;
             return this;
         }
 
         public void AddHandlerFromCallingAssembly()
         {
-            _assemblies.Add(Assembly.GetCallingAssembly());
+            Assemblies.Add(Assembly.GetCallingAssembly());
         }
 
         public CqrsConfigurationSetup UseDefaultDispatchers()
         {
-            _useDefaultDispatchers = true;
+            IsUsingDefaultDispatchers = true;
             return this;
         }
     }

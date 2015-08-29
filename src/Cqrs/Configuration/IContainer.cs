@@ -1,7 +1,7 @@
-﻿namespace Cqrs.Configuration
-{
-    using System;
+﻿using System;
 
+namespace Cqrs.Configuration
+{
     public interface IContainer
     {
         TContract GetInstance<TContract>();

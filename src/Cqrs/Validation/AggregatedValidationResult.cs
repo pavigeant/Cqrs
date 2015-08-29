@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Cqrs.Validation
 {
@@ -13,12 +12,6 @@ namespace Cqrs.Validation
             _results = results;
         }
 
-        public bool Valid
-        {
-            get
-            {
-                return _results.All(x => x.Valid);
-            }
-        }
+        public bool Valid => _results.All(x => x.Valid);
     }
 }

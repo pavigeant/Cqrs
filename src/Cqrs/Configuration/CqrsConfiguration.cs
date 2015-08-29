@@ -7,51 +7,51 @@ namespace Cqrs.Configuration
     {
         public static IContainer Container { get; set; }
 
-        public static void Setup(Action<CqrsConfigurationSetup> setup)
+        public static void Setup(Action<CqrsConfigurationSetup> action)
         {
             var config = new CqrsConfigurationSetup();
-            setup(config);
+            action(config);
 
-            if(IsValid(config))
-            {
-                ApplySetup(config);
-            }
+            if (!IsValid(config))
+                throw Exceptions.InvalidConfigurationException();
+
+            ApplySetup(config);
+        }
+
+        public static void Reset()
+        {
+            Container = null;
         }
 
         private static void ApplySetup(CqrsConfigurationSetup config)
         {
-            Container = config._container;
+            Container = config.Container;
             Container.RegisterSingle(Container);
 
-            if(config._useDefaultDispatchers)
+            if (config.IsUsingDefaultDispatchers)
             {
                 Container.Register<IQueryDispatcher, QueryDispatcher>();
                 Container.Register<ICommandDispatcher, CommandDispatcher>();
             }
 
-            if (config._assemblies.Any())
-            {
-                var queryHandlerType = typeof(IQueryHandler<,>);
-                var commandHandlerType = typeof(ICommandHandler<>);
-                foreach (var assembly in config._assemblies)
-                {
-                    var handlers = from t in assembly.GetExportedTypes()
-                                from i in t.GetInterfaces().Where(i => i.IsGenericType)
-                                let generic = i.GetGenericTypeDefinition()
-                                where generic == queryHandlerType || generic == commandHandlerType
-                                select new { Implementation = t, Contract = i };
+            if (!config.Assemblies.Any())
+                return;
 
-                    foreach (var handler in handlers)
-                    {
-                        Container.Register(handler.Contract, handler.Implementation);
-                    }
-                }
+            var queryHandlerType = typeof(IQueryHandler<,>);
+            var commandHandlerType = typeof(ICommandHandler<>);
+            var handlers = from a in config.Assemblies
+                           from t in a.GetExportedTypes()
+                           from i in t.GetInterfaces().Where(i => i.IsGenericType)
+                           let generic = i.GetGenericTypeDefinition()
+                           where generic == queryHandlerType || generic == commandHandlerType
+                           select new { Implementation = t, Contract = i };
+
+            foreach (var handler in handlers)
+            {
+                Container.Register(handler.Contract, handler.Implementation);
             }
         }
 
-        private static bool IsValid(CqrsConfigurationSetup config)
-        {
-            return config._container != null;
-        }
+        private static bool IsValid(CqrsConfigurationSetup config) => config.Container != null && config.Assemblies.Any();
     }
 }

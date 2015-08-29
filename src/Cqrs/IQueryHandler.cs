@@ -1,13 +1,13 @@
-﻿namespace Cqrs
-{
-    using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
+namespace Cqrs
+{
     /// <summary>
     /// Base interface for query handlers
     /// </summary>
     /// <typeparam name="TQuery">Query type</typeparam>
     /// <typeparam name="TResult">Query Result type</typeparam>
-    public interface IQueryHandler<TQuery, TResult>
+    public interface IQueryHandler<in TQuery, TResult>
         where TQuery : IQuery<TResult>
         where TResult : IQueryResult, new()
     {

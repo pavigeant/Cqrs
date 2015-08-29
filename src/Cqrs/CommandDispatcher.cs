@@ -1,11 +1,8 @@
-﻿namespace Cqrs
-{
-    using Configuration;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Validation;
+﻿using System.Threading.Tasks;
+using Cqrs.Configuration;
 
+namespace Cqrs
+{
     internal class CommandDispatcher : ICommandDispatcher
     {
         private readonly IContainer _container;

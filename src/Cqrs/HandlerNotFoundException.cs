@@ -1,7 +1,8 @@
-﻿namespace Cqrs
-{
-    using System;
+﻿using System;
+using System.Runtime.Serialization;
 
+namespace Cqrs
+{
     [Serializable]
     public class HandlerNotImplementedException : NotImplementedException
     {
@@ -12,8 +13,8 @@
         public HandlerNotImplementedException(string message, Exception inner) : base(message, inner) { }
 
         protected HandlerNotImplementedException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context)
+          SerializationInfo info,
+          StreamingContext context) : base(info, context)
         { }
     }
 }

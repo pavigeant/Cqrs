@@ -1,7 +1,7 @@
-﻿namespace Cqrs
-{
-    using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
+namespace Cqrs
+{
     /// <summary>
     /// Passed around to all allow dispatching a query and to be mocked by unit tests
     /// </summary>

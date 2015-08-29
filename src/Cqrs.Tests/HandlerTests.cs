@@ -1,6 +1,5 @@
 ﻿namespace Cqrs.Tests
 {
-    using System;
     using System.Threading.Tasks;
     using Configuration;
     using Xunit;
@@ -10,7 +9,7 @@
         public HandlerTests()
         {
             var container = new SimpleContainer();
-            CqrsConfiguration.Setup(setup => setup.Container(container).UseDefaultDispatchers().AddHandlerFromCallingAssembly());
+            CqrsConfiguration.Setup(setup => setup.WithContainer(container).UseDefaultDispatchers().AddHandlerFromCallingAssembly());
         }
 
         [Fact]
@@ -38,10 +37,7 @@
 
     public class HandledQueryHandler : IQueryHandler<HandledQuery, HandledResult>
     {
-        public Task<HandledResult> Retrieve(HandledQuery query)
-        {
-            return Task<HandledResult>.Factory.StartNew(() => new HandledResult());
-        }
+        public Task<HandledResult> Retrieve(HandledQuery query) => Task<HandledResult>.Factory.StartNew(() => new HandledResult());
     }
 
     public class UnhandledCommand : ICommand

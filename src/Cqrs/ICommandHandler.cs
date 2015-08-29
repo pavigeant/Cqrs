@@ -1,12 +1,11 @@
-﻿namespace Cqrs
-{
-    using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
+namespace Cqrs
+{
     /// <summary>
     /// Base interface for command handlers
     /// </summary>
-    /// <typeparam name="TParameter"></typeparam>
-    public interface ICommandHandler<TCommand>
+    public interface ICommandHandler<in TCommand>
         where TCommand : ICommand
     {
         /// <summary>
@@ -19,8 +18,7 @@
     /// <summary>
     /// Base interface for command handlers
     /// </summary>
-    /// <typeparam name="TParameter"></typeparam>
-    public interface ICommandHandler<TCommand, TResult>
+    public interface ICommandHandler<in TCommand, TResult>
         where TCommand : ICommand<TResult>
         where TResult : new()
     {

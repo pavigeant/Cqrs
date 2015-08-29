@@ -1,9 +1,8 @@
-﻿namespace Cqrs
-{
-    using Configuration;
-    using System;
-    using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Cqrs.Configuration;
 
+namespace Cqrs
+{
     internal class QueryDispatcher: IQueryDispatcher
     {
         private readonly IContainer _container;
